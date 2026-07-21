@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ### Libraries
 ```{r}
 #Data Wrangling & Visualization
+library(MedDataSets)
 library(tidyverse) # includes dplyr, ggplot2, readr, tidyr, purrr, stringr
 
 #Modeling & Tidying Model Output
@@ -29,6 +30,7 @@ library(emmeans) # for estimated marginal means & post-hoc pairwise contrasts
 
 #Plot Composition
 library(patchwork) # for combining ggplot2 figures (+ operator)
+library(kableExtra)
 ```
 
 ## Preliminary Exploratory Analysis
