@@ -13,7 +13,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-## Data Preparation & Setup
+# Abstract
+
+In 1942, during wartime food scarcity, the Canadian government faced challenges supplying its armed forces with natural sources of Vitamin C and sought to identify the necessary dietary levels for optimal health. Initial chemical assays yielded conflicting results, prompting the government to partner with McGill University to conduct a biological assay using guinea pigs, a species, like humans, incapable of synthesizing Vitamin C naturally. Because Vitamin C deficiency directly impairs dental health and odontoblast development, the study aimed to evaluate how varying supplements and dosage levels affect tooth growth. Using this historical dataset $(n = 60)$, I perform a two-way analysis of variance (ANOVA) and polynomial regression analysis to evaluate the main and interaction effects of supplement delivery method (**Orange Juice** vs. **Ascorbic Acid** (Vitamin C) and dosage level (**0.5mg**, **1.0mg**, and **2.0mg**). The results confirm a statistically significant interaction between supplement type and dosage level. Both delivery methods significantly enhance tooth growth; however, Orange Juice yields a significantly greater effect at lower dosage levels (0.5mg and 1.0mg), whereas performance between the two supplements converges at the highest dosage level (2.0mg).
+
+##Preparation & Setup
 
 ### Libraries
 ```{r}
