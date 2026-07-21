@@ -2,6 +2,7 @@
 title: "Interaction Effects of Supplements and Dosage on Tooth Growth in Guniea Pigs"
 output:
   html_document:
+    output_dir: "doc"
     theme: flatly
     highlight: tango
     toc: true
@@ -17,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 In 1942, during wartime food scarcity, the Canadian government faced challenges supplying its armed forces with natural sources of Vitamin C and sought to identify the necessary dietary levels for optimal health. Initial chemical assays yielded conflicting results, prompting the government to partner with McGill University to conduct a biological assay using guinea pigs, a species, like humans, incapable of synthesizing Vitamin C naturally. Because Vitamin C deficiency directly impairs dental health and odontoblast development, the study aimed to evaluate how varying supplements and dosage levels affect tooth growth. Using this historical dataset $(n = 60)$, I perform a two-way analysis of variance (ANOVA) and polynomial regression analysis to evaluate the main and interaction effects of supplement delivery method (**Orange Juice** vs. **Ascorbic Acid** (Vitamin C) and dosage level (**0.5mg**, **1.0mg**, and **2.0mg**). The results confirm a statistically significant interaction between supplement type and dosage level. Both delivery methods significantly enhance tooth growth; however, Orange Juice yields a significantly greater effect at lower dosage levels (0.5mg and 1.0mg), whereas performance between the two supplements converges at the highest dosage level (2.0mg).
 
-##Preparation & Setup
+# Data Preparation & Setup
 
 ### Libraries
 ```{r}
@@ -37,7 +38,7 @@ library(patchwork) # for combining ggplot2 figures (+ operator)
 library(kableExtra)
 ```
 
-## Preliminary Exploratory Analysis
+# Preliminary Exploratory Analysis
 
 Apply the within() method convert the predictor variables, supplement and dosage to factor variables. Check the balance of the data.
 
@@ -115,7 +116,7 @@ response = len, col = c("black", "red", "blue"), pch = c(18,19,20), type = "b"))
 [Discussion:]{.underline} Interactions plot points to interactions between orange juice and vitamin C at the 2.0mg dosage level.This suggests supplement 
 is influenced by dosage level at 2.0mg, with likely minimal influence at the lower dosage levels. 
 
-## Statistical Modeling & Selection
+# Statistical Modeling & Selection
 
 ### Hypothesis
 
@@ -145,19 +146,41 @@ p2_tab <- anova(p2)
 
 **AIC Comparisons**
 ```{r}
+#Create aic dataframe
 aic_tooth <- AIC(p0, p1, p2)
 
+options(knitr.kable.NA = ' ')
+
+#Create table
 kable(
-  aic_tooth,
-  caption = "AIC Comparison"
-)
+    aic_tooth,
+    caption = "AIC Comparison",
+    align = c("l", "c", "c", "c"),
+    format = "html"
+  ) |>
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"), 
+      full_width = FALSE, 
+      position = "center"
+    )
 ```
   
 **ANOVA Table: Model Terms Comparison**
 ```{r}
 options(knitr.kable.NA = ' ')
-kable(p2_tab,
-      caption = "Model Terms Comparison")
+
+#Create table
+kable(
+    p2_tab,
+    caption = "Model Terms Comparison",
+    align = c("l", "c", "c", "c"),
+    format = "html"
+  ) |>
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"), 
+      full_width = FALSE, 
+      position = "center"
+    )
 ```
 
 [Discussion:]{.underline} In Table 1 it can be shown the polynomial interactions model (p2) yielded the lowest AIC value, supporting model with interactions and a quadratic term. However, two–way ANOVA results of the models indicate the interaction term supplement and the quadratic term dosage has no significant effect on the model (see Table 2). Based on the hierarchical principal of 
@@ -179,13 +202,23 @@ final_tooth <- aov(len ~ fsupp + dose + I(dose^2)
 ```{r}
 final_anova <- anova(final_tooth)
 
-#ANOVA table
 options(knitr.kable.NA = ' ')
-kable(final_anova,
-      caption = "ANOVA Results")
+
+#Create table
+kable(
+    final_anova,
+    caption = "Final Model Terms Comparison",
+    align = c("l", "c", "c", "c"),
+    format = "html"
+  ) |>
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"), 
+      full_width = FALSE, 
+      position = "center"
+    )
 ```
 
-## Model Diagnostics & Assumption Testing
+# Model Diagnostics & Assumption Testing
 
 A residuals versus fitted values plot. And a normal Q - Q plot with Shapiro - Wilk test.
 
@@ -236,7 +269,7 @@ shap1
 [Discussion:]{.underline} The normal Q–Q plot indicates the residuals approximately follow a normal distribution.There is slight deviation from the line and at the tails. To confirm normality the Shapiro–Wilk test is conducted and has resulted in a high W = 0.9828 and p–value of 0.5576, satisfying the 
 normality assumption. The residuals versus fitted values indicates equal variance and thus is satisfied, no clear patterns are observed.
 
-## Post-Hoc Analysis & conclusion
+# Post-Hoc Analysis & conclusion
 
 ### Estimated Marginal Means
 
@@ -248,10 +281,21 @@ em_tooth <- emmeans(aov_tooth, pairwise ~ fsupp | fdose)
 ```{r}
 em_tb <- em_tooth$contrasts
 
-#Table
-kable(em_tb,
-      caption = "Pairwise Comparisons",
-      digits = 4)
+options(knitr.kable.NA = ' ')
+
+#Create table
+kable(
+    em_tb,
+    caption = "Pairwise Comparisons",
+    digits = 4,
+    align = c("l", "c", "c", "c"),
+    format = "html"
+  ) |>
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"), 
+      full_width = FALSE, 
+      position = "center"
+    )
 ```
 
 ### Contrast Visualizations
