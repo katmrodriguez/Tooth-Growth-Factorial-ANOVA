@@ -1,4 +1,4 @@
-#Tooth Growth Analysis: Factorial ANOVA & Pairwise Comparisons
+# Tooth Growth Analysis: Factorial ANOVA & Pairwise Comparisons
 
 [![Language](https://img.shields.io/badge/Language-R-blue.svg)](https://www.r-project.org/)
 [![Framework](https://img.shields.io/badge/Framework-Tidymodels-orange.svg)](https://www.tidymodels.org/)
