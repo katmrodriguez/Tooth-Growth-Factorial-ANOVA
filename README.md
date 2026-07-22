@@ -5,7 +5,7 @@
 [![Status](https://img.shields.io/badge/Status-Completed-success.svg)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-An exploratory data analysis and statistical modeling project evaluating the impact of **Vitamin C delivery method** and **dosage level** on guinea pig tooth growth (`ToothGrowth` dataset).
+An exploratory data analysis and statistical modeling project evaluating the impact of **Vitamin C supplement** and **dosage level** on guinea pig tooth growth (`ToothGrowth` dataset).
 
 🔗 **[View the Interactive Full HTML Report Here](https://katmrodriguez.github.io/Tooth-Growth-Factorial-ANOVA/)**
 
@@ -13,32 +13,32 @@ An exploratory data analysis and statistical modeling project evaluating the imp
 
 ## Executive Summary
 
-This study investigates whether the effect of Vitamin C on tooth length depends on the delivery method, **Orange Juice (OJ)** versus **Ascorbic Acid (VC)**—across three distinct dosage levels ($0.5$, $1.0$, and $2.0 \text{ mg/day}$). 
+This study investigates whether the effect of Vitamin C on tooth length depends on the supplement type, **Orange Juice (OJ)** versus **Ascorbic Acid (VC)**, across three distinct dosage levels ($0.5$, $1.0$, and $2.0 \text{ mg/day}$). 
 
 Key findings include:
-* Both **dosage level** and **delivery method** significantly impact tooth growth.
-* A significant **interaction effect** exists between dose and delivery method ($p < 0.05$).
-* **Orange Juice** produces significantly greater mean tooth length than Ascorbic Acid at lower doses ($0.5$ and $1.0 \text{ mg/day}$). However, at the highest dose ($2.0 \text{ mg/day}$), there is no statistically significant difference between the two delivery methods.
+* Both **dosage level** and **supplement** significantly impact tooth growth.
+* A significant **interaction effect** exists between dose and supplement type ($p < 0.05$).
+* **Orange Juice** produces significantly greater mean tooth length than Ascorbic Acid at lower doses ($0.5$ and $1.0 \text{ mg}$). However, at the highest dose ($2.0 \text{ mg}$), there is no statistically significant difference between the two supplement types.
 
 ---
 
 ## Key Visualizations
 
 ### Exploratory Data Analysis
-Distribution of tooth length across dose levels and delivery methods.
+Distribution of tooth length across dose levels and supplement types.
 ![Tooth Growth Boxplot](figures/boxplot_len_dose.png)
 
 ---
 
 ### Factorial Interaction
-The interaction plot demonstrates how delivery method efficiency varies across dose levels.
+The interaction plot demonstrates how Orange Juice and Ascorbic Acid efficiency varies across dose levels.
 ![Interaction Plot](figures/interaction_plot.png)
 
 ---
 
 ### Model Diagnostics
 Diagnostic plots confirming ANOVA assumptions (normality and homoscedasticity).
-![ANOVA Diagnostics](figures/model_diagnostics.png)
+![ANOVA Diagnostics](figures/final_diagnostics.png)
 
 ---
 
