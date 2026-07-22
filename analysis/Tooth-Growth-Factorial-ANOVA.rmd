@@ -68,7 +68,7 @@ stripchart(len ~ fdose * fsupp, data = toothgrowth, vertical = TRUE,
 
 ```{r}
 #Boxplot
-ggplot(toothgrowth, aes(x = fdose, y = len, fill = fsupp)) +
+eda_plot <- ggplot(toothgrowth, aes(x = fdose, y = len, fill = fsupp)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(aes(shape = fdose), width = 0.5, size = 3) +
   labs(
@@ -78,6 +78,18 @@ ggplot(toothgrowth, aes(x = fdose, y = len, fill = fsupp)) +
   theme_minimal()+
   theme(
     plot.title = element_text(hjust = 0.5))
+
+eda_plot
+
+#Save high-resolution PNG directly to figures folder
+ggsave(
+  filename = "../figures/boxplot_len_dose.png",
+  plot = eda_plot,
+  width = 10,
+  height = 4.5,
+  dpi = 200
+)
+
 ```
 
 ### Group Means
@@ -106,11 +118,21 @@ vitamin C is slightly higher.
 ### Interactions Plot
 
 ```{r}
-#Interaction plot
-
-with(toothgrowth, interaction.plot(x.factor = fdose, trace.factor = fsupp,
-response = len, col = c("black", "red", "blue"), pch = c(18,19,20), type = "b"))
-
+#Interaction Plot
+interaction_p <- ggplot(toothgrowth, aes(x = factor(dose), y = len, color = supp, group = supp)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1) +
+  stat_summary(fun = mean, geom = "point", size = 3, aes(shape = supp)) +
+  labs(
+    title = "Interaction Effect of Supplement Type and Dose",
+    x = "Dose (mg/day)",
+    y = "Mean Tooth Length",
+    color = "Supplement",
+    shape = "Supplement"
+  ) +
+  theme_minimal()
+interaction_p
+#Save high-resolution PNG directly to figures folder
+ggsave("../figures/interaction_plot.png", plot = interaction_p, width = 7, height = 5, dpi = 200)
 ```
 
 [Discussion:]{.underline} Interactions plot points to interactions between orange juice and vitamin C at the 2.0mg dosage level.This suggests supplement 
@@ -258,7 +280,7 @@ ggsave(
   plot = final_diag,
   width = 10,
   height = 4.5,
-  dpi = 100
+  dpi = 200
 )
 
 #Shapiro - Wilk Test
@@ -300,7 +322,29 @@ kable(
 
 ### Contrast Visualizations
 ```{r}
-plot(em_tb)
+#Convert emmeans output to a data frame for ggplot
+contrast_df <- as.data.frame(em_tooth$contrasts)
+
+#Add 95% Confidence Intervals manually using SE and critical t-value
+contrast_df$lower_CI <- contrast_df$estimate - (qt(0.975, df = contrast_df$df) * contrast_df$SE)
+contrast_df$upper_CI <- contrast_df$estimate + (qt(0.975, df = contrast_df$df) * contrast_df$SE)
+
+#Plot nested contrasts
+contrast_p <- ggplot(contrast_df, aes(x = fdose, y = estimate)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "firebrick") +
+  geom_point(size = 3.5, color = "#2b5c8f") +
+  geom_errorbar(aes(ymin = lower_CI, ymax = upper_CI), width = 0.15, linewidth = 0.8, color = "#2b5c8f") +
+  labs(
+    title = "Pairwise Comparison: OJ vs. VC across Dose Levels",
+    subtitle = "Estimated Difference in Means (OJ - VC) with 95% CIs",
+    x = "Dose (mg/day)",
+    y = "Difference in Mean Tooth Length"
+  ) +
+  theme_minimal()
+contrast_p
+
+#Save image
+ggsave("../figures/nested_contrasts_plot.png", plot = contrast_p, width = 7, height = 5, dpi = 300)
 ```
 
 [Discussion:]{.underline} To conclude the analysis, a pairwise comparison test is performed to examine the effects of supplement and dosage, and their levels. Both results for the supplements orange juice and vitamin C at the dosage levels 0.5mg and 1.0 yield estimate results of 5.25 (0.5mg) and 5.93 (1.0mg) with statistically significant p–values (see Table 4). Based on these results, we can conclude that orange juice on average yields a higher response on tooth growth in guinea pigs at dosage levels 0.5mg and 1.0mg. For the dosage level 2.0mg, the estimate value was 0.08, and a p–value of 0.9609 indicated in Table 4. We can deduce vitamin C at the 2.0mg dosage level yields a minimally higher response on tooth growth in guinea pigs, nevertheless given the p – value is not statistically significant, the difference between orange juice and vitamin C at this level is negligible.
