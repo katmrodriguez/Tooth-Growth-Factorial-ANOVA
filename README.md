@@ -7,7 +7,7 @@
 
 An exploratory data analysis and statistical modeling project evaluating the impact of **Vitamin C supplement** and **dosage level** on guinea pig tooth growth (`ToothGrowth` dataset).
 
-🔗 **[View the Interactive Full HTML Report Here](https://katmrodriguez.github.io/Tooth-Growth-Factorial-ANOVA/)**
+🔗 **[View the Interactive Full HTML Report Here](https://katmrodriguez.github.io/index/)**
 
 ---
 
